@@ -1,0 +1,60 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+
+# This workflow will install Deno then run `deno lint` and `deno test`.
+# For more information see: https://github.com/denoland/setup-deno
+
+# name: Cypress Tests
+
+# on: push
+
+# jobs:
+#   cypress-run:
+#     runs-on: ubuntu-22.04
+#     steps:
+#       - name: Checkout
+#         uses: actions/checkout@v4
+#       # Install npm dependencies, cache them correctly
+#       # and run all Cypress tests
+#       - name: Cypress run
+#         uses: cypress-io/github-action@v6
+#         with:
+#           build: npm run build
+#           start: npm start
+
+#       - name: Run tests
+#         run: deno test -A./C:\Users\User\Desktop\CICD\cypress\e2e\2-advanced-examples\assertions.cy.js
+
+name: Cypress Tests
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main 
+jobs:
+  cypress-run:
+    runs-on: ubuntu-latest
+    # strategy:
+    #   matrix:
+        # node-version: [14.x]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      # - name: Install dependencies
+      #   run: npm install
+      - name: Run Cypress tests
+        run: npx cypress run
+    # artifacts:
+    #   paths:
+    #     - cypress/videos/**/*.mp4
+    #     - cypress/screenshots/**/*.png 
+    #     - cypress/reports
+ 
